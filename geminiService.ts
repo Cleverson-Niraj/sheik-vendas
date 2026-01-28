@@ -1,45 +1,32 @@
 
-import { GoogleGenAI, Type } from "@google/genai";
+import { GoogleGenAI } from "@google/genai";
 
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY || '' });
+// Pega a chave do Vite (frontend). Se não tiver, desliga o Gemini sem quebrar o site.
+const API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
 
-export const enhanceAdDescription = async (title: string, currentDesc: string) => {
+// Só cria o cliente se tiver chave
+const ai = API_KEY ? new GoogleGenAI({ apiKey: API_KEY }) : null;
+
+export const enhanceAdDescription = async (
+  title: string,
+  currentDesc: string
+) => {
   try {
+    // ✅ Sem chave = não chama Gemini, retorna a descrição atual
+    if (!ai) return currentDesc;
+
     const response = await ai.models.generateContent({
-      model: 'gemini-3-flash-preview',
-      contents: `Melhore esta descrição de anúncio para o produto "${title}". Descrição original: "${currentDesc}". Torne-a persuasiva, profissional e em português brasileiro. Use bullet points se necessário.`,
+      model: "gemini-3-flash-preview",
+      contents: `Melhore esta descrição de anúncio para o item: ${title}. Descrição atual: ${currentDesc}`,
       config: {
         temperature: 0.7,
         maxOutputTokens: 500,
-      }
+      },
     });
+
     return response.text || currentDesc;
   } catch (error) {
     console.error("Gemini Error:", error);
     return currentDesc;
-  }
-};
-
-export const suggestPrice = async (title: string, category: string) => {
-  try {
-    const response = await ai.models.generateContent({
-      model: 'gemini-3-flash-preview',
-      contents: `Sugira um preço médio de mercado para um "${title}" na categoria "${category}" no Brasil. Responda apenas o valor numérico em reais.`,
-      config: {
-        responseMimeType: "application/json",
-        responseSchema: {
-          type: Type.OBJECT,
-          properties: {
-            suggestedPrice: { type: Type.NUMBER }
-          },
-          required: ["suggestedPrice"]
-        }
-      }
-    });
-    const data = JSON.parse(response.text || '{"suggestedPrice": 0}');
-    return data.suggestedPrice;
-  } catch (error) {
-    console.error("Price Suggestion Error:", error);
-    return 0;
   }
 };
