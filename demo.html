@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sheik Vendas - Marketplace Profissional</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0A0A0A;
+        }
+        .gradient-border {
+            background: linear-gradient(135deg, #FF033E 0%, #FF033E 100%);
+            padding: 1px;
+            border-radius: 1rem;
+        }
+        .media-gallery {
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
+        }
+        .media-item {
+            scroll-snap-align: start;
+        }
+    </style>
+</head>
+<body class="text-white">
+    <div id="app">
+        <!-- Header -->
+        <header class="fixed top-0 w-full bg-[#0A0A0A]/95 backdrop-blur-md z-50 border-b border-white/5">
+            <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+                <h1 class="text-2xl font-black text-[#FF033E]">SHEIK</h1>
+                <button onclick="showAdminLogin()" class="bg-white/5 hover:bg-white/10 px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                    Painel Admin
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="pt-20 pb-24">
+            <!-- Hero Banner -->
+            <section class="px-4 lg:px-8 mb-8">
+                <div class="relative h-64 lg:h-80 rounded-[2rem] overflow-hidden bg-gradient-to-br from-[#1a1a1a] to-[#0a0a0a] border border-white/5 flex items-center">
+                    <div class="absolute top-0 right-0 w-1/2 h-full bg-[#FF033E]/10 blur-[100px] -z-10" />
+                    
+                    <div class="p-8 lg:p-16 max-w-2xl relative z-10">
+                        <h2 class="text-3xl lg:text-5xl font-black mb-4 leading-tight">
+                            Anunciou, <span class="text-[#FF033E]">Vendeu!</span>
+                        </h2>
+                        <p class="text-gray-400 mb-8 max-w-md text-sm lg:text-base">
+                            A maior plataforma de vendas com tecnologia Sheik. Contato direto via WhatsApp em segundos.
+                        </p>
+                        <button onclick="showAdminLogin()" class="bg-white text-black px-8 py-3 rounded-full font-bold hover:bg-[#FF033E] hover:text-white transition-all shadow-xl">
+                            Painel Admin
+                        </button>
+                        <a href="admin-demo.html" class="bg-[#FF033E] text-white px-8 py-3 rounded-full font-bold hover:bg-[#d00232] transition-all shadow-xl">
+                            Cadastrar Produto
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Categories -->
+            <div class="px-4 lg:px-8 mb-8">
+                <div class="flex gap-4 overflow-x-auto pb-2">
+                    <button onclick="filterByCategory('Todos')" class="category-btn px-4 py-2 rounded-full whitespace-nowrap bg-[#FF033E] text-white font-medium">Todos</button>
+                    <button onclick="filterByCategory('Veículos')" class="category-btn px-4 py-2 rounded-full whitespace-nowrap bg-gray-800 text-gray-300 font-medium hover:bg-white/10">Veículos</button>
+                    <button onclick="filterByCategory('Motos')" class="category-btn px-4 py-2 rounded-full whitespace-nowrap bg-gray-800 text-gray-300 font-medium hover:bg-white/10">Motos</button>
+                    <button onclick="filterByCategory('Eletrônicos')" class="category-btn px-4 py-2 rounded-full whitespace-nowrap bg-gray-800 text-gray-300 font-medium hover:bg-white/10">Eletrônicos</button>
+                    <button onclick="filterByCategory('Imóveis')" class="category-btn px-4 py-2 rounded-full whitespace-nowrap bg-gray-800 text-gray-300 font-medium hover:bg-white/10">Imóveis</button>
+                    <button onclick="filterByCategory('Móveis')" class="category-btn px-4 py-2 rounded-full whitespace-nowrap bg-gray-800 text-gray-300 font-medium hover:bg-white/10">Móveis</button>
+                    <button onclick="filterByCategory('Pets')" class="category-btn px-4 py-2 rounded-full whitespace-nowrap bg-gray-800 text-gray-300 font-medium hover:bg-white/10">Pets</button>
+                </div>
+            </div>
+
+            <!-- Products Grid -->
+            <section class="px-4 lg:px-8">
+                <div class="flex items-center justify-between mb-8">
+                    <h3 class="text-xl lg:text-2xl font-bold flex items-center gap-2">
+                        <div class="w-1.5 h-6 bg-[#FF033E] rounded-full" />
+                        <span id="results-title">Últimas Ofertas</span>
+                    </h3>
+                    <span class="text-sm text-gray-500 font-medium">
+                        <span id="results-count">5</span> resultados
+                    </span>
+                </div>
+
+                <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                    <!-- Products will be inserted here -->
+                </div>
+            </section>
+        </main>
+
+        <!-- Admin Login Modal -->
+        <div id="admin-modal" class="fixed inset-0 z-[60] hidden items-center justify-center px-4">
+            <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" onclick="hideAdminLogin()"></div>
+            <div class="relative bg-[#121212] w-full max-w-md rounded-3xl overflow-hidden shadow-2xl border border-white/10">
+                <div class="p-6">
+                    <h2 class="text-xl font-bold text-white mb-6">Painel Administrativo</h2>
+                    <form onsubmit="handleAdminLogin(event)">
+                        <div class="space-y-4">
+                            <div>
+                                <label class="text-xs font-bold text-gray-500 uppercase tracking-widest">Senha</label>
+                                <input type="password" id="admin-password" required class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white outline-none focus:border-[#FF033E] transition-colors" placeholder="Digite a senha">
+                            </div>
+                            <div id="admin-error" class="text-red-500 text-sm hidden">Senha incorreta!</div>
+                            <button type="submit" class="w-full bg-[#FF033E] text-white py-3 rounded-xl font-bold hover:bg-[#d00232] transition-colors">
+                                Entrar
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sample products data
+        const products = [
+            {
+                id: '1',
+                title: 'iPhone 15 Pro Max 256GB Titanium',
+                price: 7499,
+                location: 'São Paulo, SP',
+                category: 'Eletrônicos',
+                images: ['https://picsum.photos/id/160/800/600', 'https://picsum.photos/id/161/800/600'],
+                whatsapp: '11999999999',
+                description: 'Aparelho em estado de novo, com garantia até outubro de 2024.',
+                created_at: new Date().toISOString(),
+                featured: true
+            },
+            {
+                id: '2',
+                title: 'Honda Civic Touring 2023',
+                price: 185000,
+                location: 'Curitiba, PR',
+                category: 'Veículos',
+                images: ['https://picsum.photos/id/111/800/600', 'https://picsum.photos/id/112/800/600'],
+                whatsapp: '41999999999',
+                description: 'Único dono, todas as revisões na concessionária.',
+                created_at: new Date(Date.now() - 86400000).toISOString(),
+                featured: false
+            },
+            {
+                id: '3',
+                title: 'Apartamento de Luxo - 3 Suítes',
+                price: 1250000,
+                location: 'Balneário Camboriú, SC',
+                category: 'Imóveis',
+                images: ['https://picsum.photos/id/122/800/600'],
+                whatsapp: '47988888888',
+                description: 'Vista mar permanente, mobiliado e decorado.',
+                created_at: new Date(Date.now() - 172800000).toISOString(),
+                featured: true
+            },
+            {
+                id: '4',
+                title: 'Yamaha MT-07 2022',
+                price: 45000,
+                location: 'Rio de Janeiro, RJ',
+                category: 'Motos',
+                images: ['https://picsum.photos/id/146/800/600'],
+                whatsapp: '21977777777',
+                description: 'Escapamento Full Akrapovic, slider e protetor de radiador.',
+                created_at: new Date(Date.now() - 259200000).toISOString(),
+                featured: false
+            },
+            {
+                id: '5',
+                title: 'Golden Retriever Filhote',
+                price: 2500,
+                location: 'Belo Horizonte, MG',
+                category: 'Pets',
+                images: ['https://picsum.photos/id/237/800/600', 'https://picsum.photos/id/238/800/600'],
+                whatsapp: '31966666666',
+                description: 'Vacinado e vermifugado, linhagem campeã.',
+                created_at: new Date(Date.now() - 345600000).toISOString(),
+                featured: false
+            }
+        ];
+
+        let currentCategory = 'Todos';
+        let currentProducts = [...products];
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            renderProducts();
+        });
+
+        function renderProducts() {
+            const grid = document.getElementById('products-grid');
+            const filtered = currentCategory === 'Todos' 
+                ? currentProducts 
+                : currentProducts.filter(p => p.category === currentCategory);
+            
+            // Sort: featured first, then by date
+            filtered.sort((a, b) => {
+                if (a.featured && !b.featured) return -1;
+                if (!a.featured && b.featured) return 1;
+                return new Date(b.created_at) - new Date(a.created_at);
+            });
+
+            document.getElementById('results-count').textContent = filtered.length;
+            document.getElementById('results-title').textContent = currentCategory === 'Todos' ? 'Últimas Ofertas' : currentCategory;
+
+            grid.innerHTML = filtered.map(product => `
+                <div class="group bg-[#121212] border border-white/5 rounded-2xl overflow-hidden hover:border-[#FF033E]/50 transition-all duration-300 shadow-xl flex flex-col h-full">
+                    <div class="relative aspect-[4/3] overflow-hidden">
+                        <div class="flex h-full">
+                            ${product.images.map((img, index) => `
+                                <img src="${img}" alt="${product.title}" class="w-full h-full object-cover flex-shrink-0 ${index > 0 ? 'hidden' : ''}" data-index="${index}" />
+                            `).join('')}
+                        </div>
+                        
+                        ${product.images.length > 1 ? `
+                            <div class="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1">
+                                ${product.images.map((_, index) => `
+                                    <button onclick="showImage(this, ${index})" class="w-2 h-2 rounded-full transition-colors ${index === 0 ? 'bg-white' : 'bg-white/50'}"></button>
+                                `).join('')}
+                            </div>
+                        ` : ''}
+                        
+                        <div class="absolute top-3 left-3 flex gap-2">
+                            <span class="bg-black/50 backdrop-blur-sm text-white text-xs px-2 py-1 rounded-full">
+                                ${product.images.length} fotos
+                            </span>
+                        </div>
+                        
+                        ${product.featured ? `
+                            <span class="absolute top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-yellow-400 to-yellow-600 text-black text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full shadow-lg">
+                                ⭐ DESTAQUE
+                            </span>
+                        ` : ''}
+                        
+                        <span class="absolute bottom-3 left-3 bg-[#FF033E] text-[10px] font-bold uppercase tracking-widest px-2 py-1 rounded">
+                            ${product.category}
+                        </span>
+                    </div>
+
+                    <div class="p-5 flex flex-col flex-1">
+                        <h4 class="font-bold text-white text-lg line-clamp-1 mb-1 group-hover:text-[#FF033E] transition-colors">
+                            ${product.title}
+                        </h4>
+                        <p class="text-2xl font-extrabold text-[#FF033E] mb-3">
+                            R$ ${product.price.toLocaleString('pt-BR')}
+                        </p>
+
+                        <div class="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-gray-400 mb-6">
+                            <span class="flex items-center gap-1">
+                                📍 ${product.location}
+                            </span>
+                        </div>
+
+                        <div class="mt-auto pt-4 border-t border-white/5">
+                            <a
+                                href="https://wa.me/55${product.whatsapp}?text=Olá,%20tenho%20interesse%20no%20anúncio:%20${encodeURIComponent(product.title)}"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="flex items-center justify-center gap-2 w-full bg-[#25D366] hover:bg-[#128C7E] text-white font-bold py-3 rounded-xl transition-all shadow-lg shadow-[#25D366]/10"
+                            >
+                                💬 Negociar no WhatsApp
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function showImage(button, index) {
+            const card = button.closest('.group');
+            const images = card.querySelectorAll('img');
+            const indicators = card.querySelectorAll('.absolute.bottom-2 button');
+            
+            images.forEach((img, i) => {
+                img.classList.toggle('hidden', i !== index);
+            });
+            
+            indicators.forEach((ind, i) => {
+                ind.classList.toggle('bg-white', i === index);
+                ind.classList.toggle('bg-white/50', i !== index);
+            });
+        }
+
+        function filterByCategory(category) {
+            currentCategory = category;
+            
+            // Update button styles
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                if (btn.textContent.includes(category) || (category === 'Todos' && btn.textContent === 'Todos')) {
+                    btn.className = 'category-btn px-4 py-2 rounded-full whitespace-nowrap bg-[#FF033E] text-white font-medium';
+                } else {
+                    btn.className = 'category-btn px-4 py-2 rounded-full whitespace-nowrap bg-gray-800 text-gray-300 font-medium hover:bg-white/10';
+                }
+            });
+            
+            renderProducts();
+        }
+
+        function showAdminLogin() {
+            document.getElementById('admin-modal').style.display = 'flex';
+        }
+
+        function hideAdminLogin() {
+            document.getElementById('admin-modal').style.display = 'none';
+            document.getElementById('admin-password').value = '';
+            document.getElementById('admin-error').classList.add('hidden');
+        }
+
+        function handleAdminLogin(event) {
+            event.preventDefault();
+            const password = document.getElementById('admin-password').value;
+            
+            if (password === 'admin123') {
+                alert('Bem-vindo ao Painel Admin! (Em uma implementação real, isso abriria o dashboard completo)');
+                hideAdminLogin();
+            } else {
+                document.getElementById('admin-error').classList.remove('hidden');
+            }
+        }
+    </script>
+</body>
+</html>

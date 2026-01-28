@@ -1,0 +1,8 @@
+
+{
+  "name": "Sheik Vendas - Premium Marketplace",
+  "description": "A high-end classifieds marketplace with AI-powered ad enhancement and a sleek dark-themed UI.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
