@@ -7,6 +7,7 @@ const API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
 // Só cria o cliente se tiver chave
 const ai = API_KEY ? new GoogleGenAI({ apiKey: API_KEY }) : null;
 
+// 🔹 Melhora a descrição do anúncio (se Gemini existir)
 export const enhanceAdDescription = async (
   title: string,
   currentDesc: string
@@ -29,4 +30,10 @@ export const enhanceAdDescription = async (
     console.error("Gemini Error:", error);
     return currentDesc;
   }
+};
+
+// 🔹 Sugere preço (fallback para não quebrar o build)
+export const suggestPrice = async (_title: string, _desc?: string) => {
+  // Gemini desligado por enquanto
+  return null;
 };
