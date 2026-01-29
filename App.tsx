@@ -98,7 +98,6 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-white text-slate-900">
-      {/* Header provavelmente ainda tá vermelho/preto (componente separado) */}
       <Header onSearchChange={setSearchQuery} />
 
       <main className="pt-20 pb-24 lg:pt-24">
@@ -109,7 +108,7 @@ export default function App() {
             <div className="absolute top-0 right-0 w-1/2 h-full bg-[#0066cc]/15 blur-[110px] -z-10" />
 
             <div className="p-8 lg:p-16 max-w-2xl relative z-10">
-              <div className="flex items-center gap-2 mb-4">
+              <div className="flex items-center gap-2 mb-5">
                 <div className="bg-[#0066cc] text-white text-[10px] font-bold px-2 py-1 rounded tracking-widest uppercase">
                   Premium
                 </div>
@@ -122,12 +121,13 @@ export default function App() {
                 </button>
               </div>
 
-              <h2 className="text-3xl lg:text-5xl font-black mb-4 leading-tight">
-                Anunciou, <span className="text-[#0066cc]">Vendeu!</span>
+              {/* ✅ Título novo (sem "Anunciou, Vendeu!") */}
+              <h2 className="text-3xl lg:text-5xl font-black mb-3 leading-tight">
+                <span className="text-[#0066cc]">Sheik</span> Vendas
               </h2>
 
-              <p className="text-slate-600 mb-8 max-w-md text-sm lg:text-base">
-                A maior plataforma de vendas e doações com tecnologia Sheik. Contato direto via WhatsApp em segundos.
+              <p className="text-slate-600 mb-7 max-w-md text-sm lg:text-base">
+                Marketplace local pra comprar, vender e doar em Novo Progresso, PA. Contato direto via WhatsApp em segundos.
               </p>
 
               <div className="flex gap-4">
