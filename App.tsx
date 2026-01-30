@@ -41,8 +41,7 @@ export default function App() {
     });
 
     return sorted.filter((ad) => {
-      const matchesCategory =
-        activeCategory === 'Todos' || ad.category === activeCategory;
+      const matchesCategory = activeCategory === 'Todos' || ad.category === activeCategory;
       const matchesSearch =
         ad.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
         ad.location.toLowerCase().includes(searchQuery.toLowerCase());
@@ -52,9 +51,7 @@ export default function App() {
 
   const toggleFavorite = (id: string) => {
     setAds((prev) =>
-      prev.map((ad) =>
-        ad.id === id ? { ...ad, isFavorite: !ad.isFavorite } : ad
-      )
+      prev.map((ad) => (ad.id === id ? { ...ad, isFavorite: !ad.isFavorite } : ad))
     );
   };
 
@@ -89,10 +86,7 @@ export default function App() {
   if (view === 'admin-cadastro') {
     return (
       <div className="min-h-screen bg-white text-slate-900">
-        <AdminCadastro
-          onSave={handleSaveAd}
-          onBack={() => setView('admin-dashboard')}
-        />
+        <AdminCadastro onSave={handleSaveAd} onBack={() => setView('admin-dashboard')} />
       </div>
     );
   }
@@ -111,23 +105,21 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-white text-slate-900">
-      <Header onSearchChange={setSearchQuery} />
+      <Header
+        onSearchChange={setSearchQuery}
+        onOpenAdmin={() => setView('admin-login')}
+      />
 
       <main className="pt-24 pb-24">
         {/* Categories */}
-        <CategoryBar
-          activeCategory={activeCategory}
-          onSelect={setActiveCategory}
-        />
+        <CategoryBar activeCategory={activeCategory} onSelect={setActiveCategory} />
 
         {/* Ads Grid */}
         <section className="px-4 lg:px-8 mt-8">
           <div className="flex items-center justify-between mb-8">
             <h3 className="text-xl lg:text-2xl font-bold flex items-center gap-2">
               <div className="w-1.5 h-6 bg-[#0066cc] rounded-full" />
-              {searchQuery
-                ? `Procurando "${searchQuery}"`
-                : 'Últimas Ofertas'}
+              {searchQuery ? `Procurando "${searchQuery}"` : 'Últimas Ofertas'}
             </h3>
 
             <span className="text-sm text-slate-500 font-medium">
@@ -138,29 +130,20 @@ export default function App() {
           {isLoading ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {[1, 2, 3, 4].map((i) => (
-                <div
-                  key={i}
-                  className="bg-slate-100 rounded-2xl h-[420px] animate-pulse"
-                />
+                <div key={i} className="bg-slate-100 rounded-2xl h-[420px] animate-pulse" />
               ))}
             </div>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {filteredAds.map((ad) => (
-                <AdCard
-                  key={ad.id}
-                  ad={ad}
-                  onToggleFavorite={toggleFavorite}
-                />
+                <AdCard key={ad.id} ad={ad} onToggleFavorite={toggleFavorite} />
               ))}
             </div>
           )}
 
           {!isLoading && filteredAds.length === 0 && (
             <div className="py-20 text-center">
-              <p className="text-slate-500">
-                Nenhum anúncio encontrado com esses critérios.
-              </p>
+              <p className="text-slate-500">Nenhum anúncio encontrado com esses critérios.</p>
             </div>
           )}
         </section>
