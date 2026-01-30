@@ -15,9 +15,9 @@ export const CategoryBar: React.FC<CategoryBarProps> = ({ activeCategory, onSele
           key={cat}
           onClick={() => onSelect(cat)}
           className={`px-6 py-2.5 rounded-full whitespace-nowrap text-sm font-semibold transition-all border ${
-            activeCategory === cat 
-              ? "bg-[#FF033E] border-[#FF033E] text-white shadow-lg shadow-[#FF033E]/20" 
-              : "bg-white/5 border-white/10 text-gray-400 hover:border-white/30 hover:text-white"
+            activeCategory === cat
+              ? 'bg-[#FF033E] border-[#FF033E] text-white shadow-lg shadow-[#FF033E]/20'
+              : 'bg-white border-slate-200 text-black hover:bg-slate-100'
           }`}
         >
           {cat}
