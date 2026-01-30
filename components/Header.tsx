@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Menu, Search, User } from 'lucide-react';
+import { Menu, Search } from 'lucide-react';
 
 interface HeaderProps {
   onOpenAdmin: () => void;
@@ -26,13 +26,8 @@ export const Header: React.FC<HeaderProps> = ({ onOpenAdmin, onSearchChange }) =
         </div>
       </div>
 
-      <div className="flex items-center gap-3 lg:gap-5">
-        {/* Mantive o ícone de user (opcional) */}
-        <button className="p-2 text-gray-400 hover:text-white hover:bg-white/5 rounded-full transition-colors">
-          <User size={24} />
-        </button>
-
-        {/* ✅ Menu abre o Admin */}
+      <div className="flex items-center">
+        {/* Menu abre o Admin */}
         <button
           onClick={onOpenAdmin}
           className="p-2 text-gray-400 hover:text-white hover:bg-white/5 rounded-full transition-colors"
