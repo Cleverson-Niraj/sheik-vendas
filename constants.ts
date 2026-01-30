@@ -1,7 +1,14 @@
 
 import { Ad } from './types';
 
-export const CATEGORIES = ["Todos", "Veículos", "Motos", "Eletrônicos", "Imóveis", "Móveis", "Pets"];
+export const CATEGORIES = [
+  "Todos",
+  "Veículos",
+  "Motos",
+  "Eletrônicos",
+  "Imóveis",
+  "Móveis"
+];
 
 export const MOCK_ADS: Ad[] = [
   {
@@ -10,10 +17,14 @@ export const MOCK_ADS: Ad[] = [
     price: 7499,
     location: 'São Paulo, SP',
     category: 'Eletrônicos',
-    images: ['https://picsum.photos/id/160/800/600', 'https://picsum.photos/id/161/800/600'],
+    images: [
+      'https://picsum.photos/id/160/800/600',
+      'https://picsum.photos/id/161/800/600'
+    ],
     videos: [],
     whatsapp: '11999999999',
-    description: 'Aparelho em estado de novo, com garantia até outubro de 2024. Todos os acessórios inclusos.',
+    description:
+      'Aparelho em estado de novo, com garantia até outubro de 2024. Todos os acessórios inclusos.',
     created_at: new Date().toISOString(),
     featured: true,
   },
@@ -23,10 +34,15 @@ export const MOCK_ADS: Ad[] = [
     price: 185000,
     location: 'Curitiba, PR',
     category: 'Veículos',
-    images: ['https://picsum.photos/id/111/800/600', 'https://picsum.photos/id/112/800/600', 'https://picsum.photos/id/113/800/600'],
+    images: [
+      'https://picsum.photos/id/111/800/600',
+      'https://picsum.photos/id/112/800/600',
+      'https://picsum.photos/id/113/800/600'
+    ],
     videos: [],
     whatsapp: '41999999999',
-    description: 'Único dono, todas as revisões na concessionária. Carro impecável.',
+    description:
+      'Único dono, todas as revisões na concessionária. Carro impecável.',
     created_at: new Date(Date.now() - 86400000).toISOString(),
     featured: false,
   },
@@ -36,10 +52,14 @@ export const MOCK_ADS: Ad[] = [
     price: 1250000,
     location: 'Balneário Camboriú, SC',
     category: 'Imóveis',
-    images: ['https://picsum.photos/id/122/800/600', 'https://picsum.photos/id/123/800/600'],
+    images: [
+      'https://picsum.photos/id/122/800/600',
+      'https://picsum.photos/id/123/800/600'
+    ],
     videos: [],
     whatsapp: '47988888888',
-    description: 'Vista mar permanente, mobiliado e decorado. Melhor localização da cidade.',
+    description:
+      'Vista mar permanente, mobiliado e decorado. Melhor localização da cidade.',
     created_at: new Date(Date.now() - 172800000).toISOString(),
     featured: true,
   },
@@ -52,21 +72,9 @@ export const MOCK_ADS: Ad[] = [
     images: ['https://picsum.photos/id/146/800/600'],
     videos: [],
     whatsapp: '21977777777',
-    description: 'Escapamento Full Akrapovic, slider e protetor de radiador. Manual e chave reserva.',
+    description:
+      'Escapamento Full Akrapovic, slider e protetor de radiador. Manual e chave reserva.',
     created_at: new Date(Date.now() - 259200000).toISOString(),
-    featured: false,
-  },
-  {
-    id: '5',
-    title: 'Golden Retriever Filhote',
-    price: 2500,
-    location: 'Belo Horizonte, MG',
-    category: 'Pets',
-    images: ['https://picsum.photos/id/237/800/600', 'https://picsum.photos/id/238/800/600'],
-    videos: [],
-    whatsapp: '31966666666',
-    description: 'Vacinado e vermifugado, linhagem campeã. Documentação em dia.',
-    created_at: new Date(Date.now() - 345600000).toISOString(),
     featured: false,
   }
 ];
